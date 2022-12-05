@@ -1,0 +1,27 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    ports: 
+      - 5672:5672   #PUERTO MENSAJES
+      - 8080:15672  #PUERTO GUI
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    restart: always
+    volumes:
+      - rabbitdata:/var/lib/rabbitmq
+
+  receiver:
+    build: ./receiver/
+    command: sh -c "sleep 30s ; python3 ./receive.py"
+    depends_on:
+      - rabbitmq
+
+  sender:
+    build: ./sender/
+    command: sh -c "sleep 40s ; python3 ./send.py"
+    depends_on:
+      - rabbitmq
+
+volumes:
+  rabbitdata:
