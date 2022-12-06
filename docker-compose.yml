@@ -22,6 +22,7 @@ services:
     command: sh -c "sleep 40s ; python3 ./send.py"
     depends_on:
       - rabbitmq
+      - receiver
 
 volumes:
   rabbitdata:
