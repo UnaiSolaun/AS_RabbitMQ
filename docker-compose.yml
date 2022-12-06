@@ -9,7 +9,7 @@ services:
       RABBITMQ_DEFAULT_PASS: "guest"
     restart: always
     volumes:
-      - rabbitdata:/var/lib/rabbitmq
+      - rabbitdata:/etc/rabbitmq
 
   receiver:
     build: ./receiver/
